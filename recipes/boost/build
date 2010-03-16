@@ -1,0 +1,8 @@
+
+VERSION="1.42.0"
+SOURCE="boost-$VERSION.tar.bz2"
+
+build () {
+  ./bjam toolset=sun address-model=32 --prefix=$DESTDIR/../stage/usr --libdir=$DESTDIR/../stage/usr/lib --without-mpi install
+  ./bjam toolset=sun address-model=64 --prefix=$DESTDIR/../stage/usr --libdir=$DESTDIR/../stage/usr/lib/amd64 --without-mpi install
+}
