@@ -3,7 +3,7 @@ VERSION="1.42.0"
 SOURCE="boost_1_42_0.tar.bz2"
 
 unpack () {
-    tar -xjf boost_1_42_0.tar.bz2 && cd boost_1_42_0
+    tar -xjf "$1" && cd boost_1_42_0
 }
 
 build () {

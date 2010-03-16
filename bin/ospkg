@@ -5,13 +5,18 @@
 ROOT="$PWD/$(dirname $0)/.."
 . "$ROOT/recipes/$1/build"
 
-TMPDIR="$(mktemp -d /tmp/salt.XXXXX)" && cd $TMPDIR
+mkdir -p "$ROOT/cache"
+if [ ! -f "$ROOT/cache/$SOURCE" ]; then
+  wget "http://pkg.caurea.org/-/$SOURCE" -O "$ROOT/cache/$SOURCE"
+fi
 
-wget "http://pkg.caurea.org/-/$SOURCE"
-unpack "${SOURCE##*/}" && DESTDIR="$TMPDIR/staging" build
+TMPDIR="$(mktemp -d "/tmp/ospkg.XXXXX")" && cd "$TMPDIR"
+unpack "$ROOT/cache/$SOURCE" && DESTDIR="$TMPDIR/staging" build
 
 PKGREPO="file://$TMPDIR/repo"
-eval "$(pkgsend -s "$PKGREPO" create-repository --Set-property publisher.)"
+eval "$(pkgsend -s "$PKGREPO" create-repository --set-property publisher.prefix=empty)"
 pkgsend -s "$PKGREPO" open "$1@VERSION"
 pkgsend -s "$PKGREPO" generate "$TMPDIR/staging" > "$TMPDIR/manifest"
 pkgsend -s "$PKGREPO" close
+
+rm -rf "$TMPDIR"
