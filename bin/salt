@@ -8,8 +8,7 @@ ROOT="$PWD/$(dirname $0)/.."
 TMPDIR="$(mktemp -d /tmp/salt.XXXXX)" && cd $TMPDIR
 
 wget "http://pkg.caurea.org/-/$SOURCE"
-
-unpack "$SOURCE" && DESTDIR="$TMPDIR/staging" build
+unpack "${SOURCE##*/}" && DESTDIR="$TMPDIR/staging" build
 
 PKGREPO="file://$TMPDIR/repo"
 eval "$(pkgsend -s "$PKGREPO" create-repository --Set-property publisher.)"

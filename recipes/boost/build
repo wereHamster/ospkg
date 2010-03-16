@@ -1,8 +1,13 @@
 
 VERSION="1.42.0"
-SOURCE="boost-$VERSION.tar.bz2"
+SOURCE="boost_1_42_0.tar.bz2"
+
+unpack () {
+    tar -xjf boost_1_42_0.tar.bz2 && cd boost_1_42_0
+}
 
 build () {
-  ./bjam toolset=sun address-model=32 --prefix=$DESTDIR/../stage/usr --libdir=$DESTDIR/../stage/usr/lib --without-mpi install
-  ./bjam toolset=sun address-model=64 --prefix=$DESTDIR/../stage/usr --libdir=$DESTDIR/../stage/usr/lib/amd64 --without-mpi install
+  ./bootstrap.sh
+  ./bjam toolset=sun address-model=32 --prefix=$DESTDIR/usr --libdir=$DESTDIR/usr/lib --without-mpi install
+  ./bjam toolset=sun address-model=64 --prefix=$DESTDIR/usr --libdir=$DESTDIR/usr/lib/amd64 --without-mpi install
 }
