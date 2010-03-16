@@ -7,7 +7,7 @@ unpack () {
 }
 
 build () {
-  ./bootstrap.sh
+  bash ./bootstrap.sh
   ./bjam toolset=sun address-model=32 --prefix=$DESTDIR/usr --libdir=$DESTDIR/usr/lib --without-mpi install
   ./bjam toolset=sun address-model=64 --prefix=$DESTDIR/usr --libdir=$DESTDIR/usr/lib/amd64 --without-mpi install
 }
