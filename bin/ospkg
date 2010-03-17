@@ -14,9 +14,10 @@ TMPDIR="$(mktemp -d "/tmp/ospkg.XXXXX")" && cd "$TMPDIR"
 unpack "$ROOT/cache/$SOURCE" && DESTDIR="$TMPDIR/staging" build
 
 PKGREPO="file://$TMPDIR/repo"
-eval "$(pkgsend -s "$PKGREPO" create-repository --set-property publisher.prefix=empty)"
-pkgsend -s "$PKGREPO" open "$1@VERSION"
-pkgsend -s "$PKGREPO" generate "$TMPDIR/staging" > "$TMPDIR/manifest"
-pkgsend -s "$PKGREPO" close
+pkgsend -s "$PKGREPO" create-repository --set-property publisher.prefix=caurea.org
 
-rm -rf "$TMPDIR"
+( pkgsend generate "$TMPDIR/staging"; cat "$ROOT/recipes/$1/manifest" 2>/dev/null) | \
+  pkgmogrify -O "$TMPDIR/manifest"
+pkgsend -s "$PKGREPO" publish -d "$TMPDIR/staging" "$1@$VERSION" "$TMPDIR/manifest"
+
+#rm -rf "$TMPDIR"
