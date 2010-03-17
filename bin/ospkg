@@ -11,13 +11,13 @@ if [ ! -f "$ROOT/cache/$SOURCE" ]; then
 fi
 
 TMPDIR="$(mktemp -d "/tmp/ospkg.XXXXX")" && cd "$TMPDIR"
-unpack "$ROOT/cache/$SOURCE" && DESTDIR="$TMPDIR/staging/usr" build
+DESTDIR="$TMPDIR/files" build "$ROOT/cache/$SOURCE"
 
-PKGREPO="file://$TMPDIR/repo"
-pkgsend -s "$PKGREPO" create-repository --set-property publisher.prefix=caurea.org
+( echo "set name=pkg.fmri value=pkg:/$1@$VERSION,$(uname -r)";
+  pkgsend generate "$TMPDIR/files";
+  cat "$ROOT/recipes/$1/manifest" 2>/dev/null;
+) | pkgmogrify -O "$TMPDIR/manifest"
 
-( pkgsend generate "$TMPDIR/staging"; cat "$ROOT/recipes/$1/manifest" 2>/dev/null) | \
-  pkgmogrify -O "$TMPDIR/manifest"
-pkgsend -s "$PKGREPO" publish -d "$TMPDIR/staging" "$1@$VERSION" "$TMPDIR/manifest"
-
-#rm -rf "$TMPDIR"
+mkdir -p "$ROOT/pkg" && rm -f "$ROOT/pkg/$1-$VERSION.tar.xz"
+tar -cf "$ROOT/pkg/$1-$VERSION.tar" -C "$TMPDIR" files/ manifest
+xz -ze "$ROOT/pkg/$1-$VERSION.tar"

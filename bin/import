@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+TMPDIR="$(mktemp -d /tmp/ospkg.XXXXX)"
+xz -dc "$1" | tar -xf - -C "$TMPDIR"
+
+PKGREPO="file:///var/pkg/repo"
+pkgsend -s "$PKGREPO" publish -d "$TMPDIR/files" --fmri-in-manifest "$TMPDIR/manifest"
+
+#rm -rf "$TMPDIR"
