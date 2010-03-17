@@ -11,7 +11,7 @@ if [ ! -f "$ROOT/cache/$SOURCE" ]; then
 fi
 
 TMPDIR="$(mktemp -d "/tmp/ospkg.XXXXX")" && cd "$TMPDIR"
-unpack "$ROOT/cache/$SOURCE" && DESTDIR="$TMPDIR/staging" build
+unpack "$ROOT/cache/$SOURCE" && DESTDIR="$TMPDIR/staging/usr" build
 
 PKGREPO="file://$TMPDIR/repo"
 pkgsend -s "$PKGREPO" create-repository --set-property publisher.prefix=caurea.org
