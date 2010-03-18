@@ -11,6 +11,6 @@ build () {
   cd ../../ && rm -rf js
 
   tar -xzf "$1" && cd js/src && rm lock*
-  gmake -f Makefile.ref $OPTS XCFLAGS="$XCFLAGS" CC="cc -m64" LIBDIR=lib/amd64
-  gmake -f Makefile.ref $OPTS XCFLAGS="$XCFLAGS" CC="cc -m64" LIBDIR=lib/amd64 export
+  gmake -f Makefile.ref $OPTS XCFLAGS="$XCFLAGS" CC="cc -m64 -xmodel=medium -Kpic" LIBDIR=lib/amd64
+  gmake -f Makefile.ref $OPTS XCFLAGS="$XCFLAGS" CC="cc -m64 -xmodel=medium -Kpic" LIBDIR=lib/amd64 export
 }
