@@ -5,12 +5,12 @@
 ROOT="$PWD/$(dirname $0)/.."
 . "$ROOT/recipes/$1/build"
 
-mkdir -p "$ROOT/cache"
+mkdir -p "$ROOT/cache" "$ROOT/tmp"
 if [ ! -f "$ROOT/cache/$SOURCE" ]; then
   wget "http://pkg.caurea.org/-/$SOURCE" -O "$ROOT/cache/$SOURCE"
 fi
 
-TMPDIR="$(mktemp -d "/tmp/ospkg.XXXXX")" && cd "$TMPDIR"
+TMPDIR="$(mktemp -d "$ROOT/tmp/ospkg.XXXXX")" && cd "$TMPDIR"
 DESTDIR="$TMPDIR/files" build "$ROOT/cache/$SOURCE"
 
 ( echo "set name=pkg.fmri value=pkg:/$1@$VERSION,$(uname -r)";
