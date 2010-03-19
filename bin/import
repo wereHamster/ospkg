@@ -9,7 +9,7 @@ TMPDIR="$(mktemp -d /tmp/ospkg.XXXXX)"
 xz -dc "$1" | tar -xf - -C "$TMPDIR"
 
 PKGREPO="file:///var/pkg/repo"
-eval "$(pkgensd -s "$PKGREPO" open "$2")"
+eval "$(pkgsend -s "$PKGREPO" open "$2")"
 pkgsend -s "$PKGREPO" include -d "$TMPDIR/files/" "$TMPDIR/manifest"
 pkgsend -s "$PKGREPO" close
 
