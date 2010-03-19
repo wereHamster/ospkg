@@ -4,6 +4,8 @@ TMPDIR="$(mktemp -d /tmp/ospkg.XXXXX)"
 xz -dc "$1" | tar -xf - -C "$TMPDIR"
 
 PKGREPO="file:///var/pkg/repo"
-pkgsend -s "$PKGREPO" publish -d "$TMPDIR/files" --fmri-in-manifest "$TMPDIR/manifest"
+eval "$(pkgensd -s "$PKGREPO" open "$1")"
+pkgsend -s "$PKGREPO" include -d "$TMPDIR/files/" "$TMPDIR/manifest"
+pkgsend -s "$PKGREPO" close
 
-#rm -rf "$TMPDIR"
+rm -rf "$TMPDIR"
