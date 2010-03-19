@@ -12,5 +12,6 @@ PKGREPO="file:///var/pkg/repo"
 eval "$(pkgsend -s "$PKGREPO" open "$2")"
 pkgsend -s "$PKGREPO" include -d "$TMPDIR/files/" "$TMPDIR/manifest"
 pkgsend -s "$PKGREPO" close
-
 rm -rf "$TMPDIR"
+
+/usr/sbin/svcadm restart pkg/server

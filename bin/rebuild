@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+/usr/sbin/svcadm disable pkg/server
+rm -rf /var/pkg/repo/*
+pkgsend -s file:///var/pkg/repo create-repository
+/usr/sbin/svcadm enable pkg/server
