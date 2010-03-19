@@ -1,0 +1,7 @@
+VERSION="0.7.8"
+SOURCE="libebml-$VERSION.tar.bz2"
+
+build () {
+  tar -xjf "$1" && cd libebml-$VERSION/make/linux/
+  make install prefix="$DESTDIR/usr"
+}
