@@ -3,5 +3,5 @@ SOURCE="libmatroska-$VERSION.tar.bz2"
 
 build () {
   tar -xjf "$1" && cd libmatroska-$VERSION/make/linux/
-  make install prefix="$DESTDIR/usr"
+  make install CXX=CC WARNINGFLAGS= prefix="$DESTDIR/usr"
 }
