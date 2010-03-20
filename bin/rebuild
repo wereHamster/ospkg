@@ -1,6 +1,9 @@
 #!/usr/bin/bash
 
 /usr/sbin/svcadm disable pkg/server
+
 rm -rf /var/pkg/repo/*
-pkgsend -s file:///var/pkg/repo create-repository
+pkgsend -s file:///var/pkg/repo create-repository \
+  --set-property publisher.prefix=caurea.org
+
 /usr/sbin/svcadm enable pkg/server
