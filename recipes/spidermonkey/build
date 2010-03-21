@@ -2,15 +2,11 @@ VERSION="1.8.0"
 SOURCE="js-1.8.0-rc1.tar.gz"
 
 build () {
-  XCFLAGS="-DJS_C_STRINGS_ARE_UTF8 -DHAVE_VA_COPY -DVA_COPY=va_copy"
-  OPTS="OS_CONFIG=SunOS5.9 BUILD_OPT=1 JS_DIST="$DESTDIR/usr" OPTIMIZER="
-
   tar -xzf "$1" && cd js/src/ && rm lock*
-  gmake -f Makefile.ref $OPTS XCFLAGS="$XCFLAGS"
-  gmake -f Makefile.ref $OPTS XCFLAGS="$XCFLAGS" export
-  cd ../../ && rm -rf js
 
-  tar -xzf "$1" && cd js/src && rm lock*
-  gmake -f Makefile.ref $OPTS XCFLAGS="$XCFLAGS" CC="cc -m64 -xmodel=medium -Kpic" LD="cc -m64" LIBDIR=lib/amd64
-  gmake -f Makefile.ref $OPTS XCFLAGS="$XCFLAGS" CC="cc -m64 -xmodel=medium -Kpic" LD="cc -m64" LIBDIR=lib/amd64 export
+  make -f Makefile.ref OS_CONFIG=SunOS5.10 BUILD_OPT=1 \
+    XCFLAGS="-DJS_C_STRINGS_ARE_UTF8" JS_DIST="$DESTDIR/usr"
+
+  make -f Makefile.ref OS_CONFIG=SunOS5.10 BUILD_OPT=1 \
+    XCFLAGS="-DJS_C_STRINGS_ARE_UTF8" JS_DIST="$DESTDIR/usr" export
 }
