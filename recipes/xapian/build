@@ -1,0 +1,8 @@
+VERSION="1.0.18"
+SOURCE="xapian-core-$VERSION.tar.gz"
+
+build () {
+  tar -xzf "$1" && cd xapian-core-$VERSION/
+  ./configure --prefix=/usr
+  make install DESTDIR="$DESTDIR"
+}
