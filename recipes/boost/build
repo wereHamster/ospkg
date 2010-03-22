@@ -4,7 +4,7 @@ SOURCE="boost_1_42_0.tar.bz2"
 
 build () {
   tar -xjf "$1" && cd boost_1_42_0/
-  bash ./bootstrap.sh --with-toolset=sun
-  ./bjam toolset=sun address-model=32 --prefix=$DESTDIR/usr --libdir=$DESTDIR/usr/lib --without-mpi install
-  ./bjam toolset=sun address-model=64 --prefix=$DESTDIR/usr --libdir=$DESTDIR/usr/lib/amd64 --without-mpi install
+  bash ./bootstrap.sh
+  ./bjam -j$NCPU address-model=32 --prefix=$DESTDIR/usr --libdir=$DESTDIR/usr/lib --without-mpi install
+  ./bjam -j$NCPU address-model=64 --prefix=$DESTDIR/usr --libdir=$DESTDIR/usr/lib/amd64 --without-mpi install
 }

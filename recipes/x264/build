@@ -3,6 +3,6 @@ SOURCE="x264-snapshot-20100228-2245.tar.bz2"
 
 build () {
   tar -xjf "$1" && cd x264-snapshot-20100228-2245
-  ./configure --prefix=/usr
+  ./configure --prefix=/usr --enable-shared --enable-pic
   make install DESTDIR="$DESTDIR"
 }

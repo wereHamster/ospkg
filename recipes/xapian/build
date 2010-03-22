@@ -3,6 +3,13 @@ SOURCE="xapian-core-$VERSION.tar.gz"
 
 build () {
   tar -xzf "$1" && cd xapian-core-$VERSION/
+
   ./configure --prefix=/usr
-  make install DESTDIR="$DESTDIR"
+  make install DESTDIR="$2"
+
+  cd .. && rm -rf xapian-core-$VERSION
+  tar -xzf "$1" && cd xapian-core-$VERSION/
+
+  CFLAGS="-m64" CXXFLAGS="-m64" LDFLAGS="-m64" ./configure --prefix=/usr --libdir=/usr/lib/amd64
+  make install DESTDIR="$2"
 }

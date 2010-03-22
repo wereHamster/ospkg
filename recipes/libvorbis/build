@@ -1,8 +1,4 @@
 VERSION="1.2.3"
 SOURCE="libvorbis-$VERSION.tar.bz2"
 
-build () {
-  tar -xjf "$1" && cd libvorbis-$VERSION/
-  ./configure --prefix=/usr CC=cc CXX=CC
-  make install DESTDIR="$DESTDIR"
-}
+. "$ROOT/templates/autotools"

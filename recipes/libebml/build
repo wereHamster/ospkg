@@ -3,5 +3,10 @@ SOURCE="libebml-$VERSION.tar.bz2"
 
 build () {
   tar -xjf "$1" && cd libebml-$VERSION/make/linux/
-  make install CXX=CC WARNINGFLAGS= prefix="$DESTDIR/usr"
+  make install prefix="$2/usr"
+
+  cd ../../../ && rm -rf libebml-$VERSION
+
+  tar -xjf "$1" && cd libebml-$VERSION/make/linux/
+  make install prefix="$2Ã/usr" libdir="$2/usr/lib/amd64" CXX="g++ -m64"
 }

@@ -11,7 +11,7 @@ if [ ! -f "$ROOT/cache/$SOURCE" ]; then
 fi
 
 TMPDIR="$(mktemp -d "$ROOT/tmp/ospkg.XXXXX")" && cd "$TMPDIR"
-DESTDIR="$TMPDIR/files" build "$ROOT/cache/$SOURCE"
+build "$ROOT/cache/$SOURCE" "$TMPDIR/files"
 
 ( echo "set name=pkg.fmri value=pkg:/$1@$VERSION,$(uname -r)";
   pkgsend generate "$TMPDIR/files";

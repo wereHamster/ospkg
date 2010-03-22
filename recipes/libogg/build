@@ -1,8 +1,4 @@
 VERSION="1.1.4"
 SOURCE="libogg-$VERSION.tar.gz"
 
-build () {
-  tar -xzf "$1" && cd libogg-$VERSION/
-  ./configure --prefix=/usr CC=cc CXX=CC
-  make install DESTDIR="$DESTDIR"
-}
+. "$ROOT/templates/autotools"

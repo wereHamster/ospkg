@@ -3,6 +3,6 @@ SOURCE="mkvtoolnix-$VERSION.tar.bz2"
 
 build () {
   tar -xjf "$1" && cd mkvtoolnix-$VERSION/
-  bash ./configure --prefix=/usr CC=cc CXX=CC
+  bash ./configure --prefix=/usr
   make install DESTDIR="$DESTDIR"
 }
