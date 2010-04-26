@@ -1,0 +1,7 @@
+VERSION="1.2.0"
+SOURCE="scons-1.2.0.d20100306.tar.gz"
+
+build () {
+  tar -xzf "$1" && cd scons-1.2.0.d20100306/
+  python setup.py install --prefix=/usr --root="$DESTDIR"
+}
