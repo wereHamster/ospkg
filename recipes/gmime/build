@@ -1,0 +1,4 @@
+VERSION="2.4.15"
+SOURCE="gmime-$VERSION.tar.bz2"
+
+. "$ROOT/templates/autotools"
