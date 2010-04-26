@@ -1,0 +1,4 @@
+VERSION="1.2.3"
+SOURCE="libvorbis-$VERSION.tar.bz2"
+
+. "$ROOT/templates/autotools"

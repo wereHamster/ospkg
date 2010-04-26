@@ -1,0 +1,4 @@
+VERSION="5.7-20100424"
+SOURCE="ncurses-$VERSION.tar.bz2"
+
+. "$ROOT/templates/autotools"
