@@ -1,0 +1,7 @@
+VERSION="1.7.0.5"
+SOURCE="git-$VERSION.tar.bz2"
+
+build () {
+  gtar -xjf "$1" && cd git-$VERSION/
+  gmake prefix=/usr CFLAGS="-m64" install DESTDIR="$2"
+}
