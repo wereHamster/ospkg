@@ -1,0 +1,16 @@
+
+build () {
+  SRC="$(gtar -tf "$1" | head -n1)"
+
+  gtar -xf "$1" && cd "$SRC"
+  CFLAGS="-O2" CXXFLAGS="-O2" \
+    ./configure --prefix="/usr/local"
+  gmake install DESTDIR="$2"
+
+  cd ../ && rm -rf "$SRC"
+
+  gtar -xf "$1" && cd "$SRC"
+  CFLAGS="-m64 -O2" CXXFLAGS="-m64 -O2" LDFLAGS="-m64" \
+    ./configure --prefix="/usr/local" --libdir="/usr/local/lib/amd64"
+  gmake install DESTDIR="$2"
+}
