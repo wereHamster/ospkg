@@ -1,0 +1,12 @@
+VERSION="2.0.1"
+SOURCE="talloc-$VERSION.tar.gz"
+
+build () {
+  tar -xf "$1" && cd talloc-$VERSION/
+  ./configure --prefix=/usr
+  make VERSIONSCRIPT= EXPORTSFILE= SHLD_FLAGS="-shared" install DESTDIR="$2"
+  cd .. && rm -rf talloc-$VERSION/
+  tar -xf "$1" && cd talloc-$VERSION/
+  CFLAGS="-m64" .//configure --prefix=/usr --libdir=/usr/lib/amd64
+  make VERSIONSCRIPT= EXPORTSFILE= SHLD_FLAGS="-m64 -shared" install DESTDIR="$2"  
+}
