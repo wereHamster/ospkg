@@ -1,0 +1,20 @@
+VERSION="4.5.0"
+SOURCE="gcc-$VERSION.tar.bz2"
+
+build () {
+  tar -xf "$1" && cd gcc-4.5.0/
+  echo $PWD
+
+  curlhttp://pkg.caurea.org/-/mpfr-2.4.2.tar.xz | gtar -xJf -
+    mv mpfr-2.4.2 mpfr
+  curl http://pkg.caurea.org/-/mpc-0.8.1.tar.gz | gtar -xzf -
+    mv mpc-0.8.1 mpc
+  curl http://pkg.caurea.org/-/gmp-5.0.1.tar.bz2 | gtar -xjf -
+    mv gmp-5.0.1 gmp
+
+  ./configure --prefix=/usr --with-as=/usr/gnu/bin/as --with-gnu-as \
+    --with-ld=/usr/ccs/bin/ld --without-gnu-ld --enable-languages=c,c++
+
+  gmake -j8
+  gmake -j8 install DESTDIR="$2"
+}

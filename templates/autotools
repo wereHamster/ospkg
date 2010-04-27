@@ -4,13 +4,13 @@ build () {
 
   gtar -xf "$1" && cd "$SRC"
   CFLAGS="-O2" CXXFLAGS="-O2" \
-    ./configure --prefix="/usr/local"
+    ./configure --prefix="/usr" $CONFIGURE
   gmake -j8 install DESTDIR="$2"
 
   cd ../ && rm -rf "$SRC"
 
   gtar -xf "$1" && cd "$SRC"
   CFLAGS="-m64 -O2" CXXFLAGS="-m64 -O2" LDFLAGS="-m64" \
-    ./configure --prefix="/usr/local" --libdir="/usr/local/lib/amd64"
+    ./configure --prefix="/usr" --libdir="/usr/lib/amd64" $CONFIGURE
   gmake -j8 install DESTDIR="$2"
 }
