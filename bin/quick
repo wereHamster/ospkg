@@ -1,0 +1,23 @@
+#!/usr/bin/bash
+
+fatal () { echo "fatal: $1"; exit 1; }
+
+SOURCE="$PWD/$1"
+PACKAGE="$(gsed -Ee "s/(.*)-([0-9.]*).tar.(gz|bz2|xz)/\1/" <<<$1)"
+VERSION="$(gsed -Ee "s/(.*)-([0-9.]*).tar.(gz|bz2|xz)/\2/" <<<$1)"
+
+rm -rf build destdir manifest;
+mkdir build destdir; cd build
+
+gtar -xf "$SOURCE" && cd "$(gtar -tf "$SOURCE" | head -n1)"
+CFLAGS="-O2" CXXFLAGS="-O2" ./configure --prefix="/usr" || fatal "configure"
+gmake -j8 install DESTDIR="/tmp/destdir" || fatal "make"
+
+( echo "set name=pkg.fmri value=pkg:/$PACKAGE@$VERSION,$(uname -r)";
+  pkgsend generate "/tmp/destdir";
+  cat "$ROOT/recipes/$1/manifest" 2>/dev/null;
+) | pkgmogrify -O "/tmp/manifest"
+
+PKGREPO="file:///var/pkg/repo"
+pfexec pkgsend -s "$PKGREPO" publish -d "/tmp/destdir" --fmri-in-manifest "/tmp/manifest"
+pfexec /usr/sbin/svcadm restart pkg/server
