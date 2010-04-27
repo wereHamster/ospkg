@@ -1,5 +1,5 @@
 VERSION="5.7.20100424"
 SOURCE="ncurses-$VERSION.tar.bz2"
 
-CONFIGURE="--enable-widec --without-debug --without-profile"
+CONFIGURE="--disable-overwrite --enable-widec --without-debug --without-profile"
 . "$ROOT/templates/autotools"
